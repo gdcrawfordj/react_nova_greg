@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <style>
+        div.ficha{background-color:yellow;padding: 1em; margin: 1em auto;
+                width: 200px;}
+    </style>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.min.js"></script>
+    <script type="text/babel">
+        class Principal extends React.Component{
+            constructor(props){
+                super(props)
+                this.state = {date:new Date()};
+            }
+            render(){
+                return  (
+                    <div>
+                        {/*########## asignar la función global saludar al evento click del botón*/}
+                        <button onClick={saludar} >Saludar</button>
+                        <Interior />
+                    </div>
+                );
+            }
+        }
+        // -------- función global manejadora del evento ---------------
+        function saludar(event){
+            console.log(event);
+            console.log("currentTarget:",event.currentTarget);
+            console.log("target:",event.target);
+            console.log("this:",this);
+            alert("Hola desde un evento");
+        }
+        
+        class Interior extends React.Component{
+            render(){
+                console.log("Actualizado el interior");
+                return  <div>Componente interior</div>;
+            }
+        }
+	    ReactDOM.render(<Principal/>,document.getElementById('root'));   
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+
+</html>

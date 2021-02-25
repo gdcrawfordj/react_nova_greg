@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <style>
+        div.ficha{border:1px solid black; padding: 20px;}
+		img{height:100px;}
+    </style>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.min.js"></script>
+    <script type="text/babel">
+        class Ficha extends React.Component{
+            constructor(){
+                super();
+                this.foto = "img/casa.gif";
+            }
+            render(){
+                return  (
+                    <div className="ficha">
+                        <h1>Casa en el campo</h1>
+                        <figure>
+                            <img  src={this.foto} alt="Mi casa" />
+                            {/*########## Incluir el componente "Descripción" en este punto */}
+                            <Descripcion/>
+                        </figure>
+                    </div>
+                );
+            }
+        }
+        class Descripcion extends React.Component{
+            constructor(){
+                super();
+                this.texto = "Chalé con todo tipo de comodidades ...";
+            }
+            render(){
+                return <figcaption>{this.texto}</figcaption>;
+            }
+        }
+	    ReactDOM.render(<Ficha />, document.getElementById('root'));     
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+
+</html>

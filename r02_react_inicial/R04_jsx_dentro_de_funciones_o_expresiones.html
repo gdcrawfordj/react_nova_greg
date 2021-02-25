@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <style>
+        .par{border: 1px solid black; background-color: gold;}
+        .impar{border: 1px solid black; background-color: khaki;}
+        div{padding: 1em;margin:1em auto;}
+    </style>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.min.js"></script>
+    <script type="text/babel">
+        let lista = ["Pepe","Carlos","Marta","Daniel"];
+        function imprimirFila(persona,i){
+            if(i%2==0){
+				// ############ Retornar el JSX de un "div.par" que muestre en su interior el contenido de "persona"
+                return <div className="par">{persona}</div>;
+            } else {
+				// ############ Retornar el JSX de un "div.impar" que muestre en su interior el contenido de "persona"
+                return <div className="impar">{persona}</div>;;
+            }
+        }
+        let elemento = (
+            <div>
+				{/*######### incluir el JSX que retorna "impimirFila" para cada uno de los elementos de la matriz "lista" */}
+                {imprimirFila(lista[0],0)}
+                {imprimirFila(lista[1],1)}
+                {imprimirFila(lista[2],2)}
+                {imprimirFila(lista[3],3)}
+            </div>
+        );
+	    ReactDOM.render(elemento,
+				document.getElementById('root'));    
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+
+</html>

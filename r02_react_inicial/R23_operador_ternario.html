@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <style>
+        div.ficha{background-color:yellow;padding: 1em; margin: 1em auto;
+                width: 200px;}
+    </style>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.min.js"></script>
+    <script type="text/babel">
+        class Principal extends React.Component{
+            constructor(props){
+                super(props)
+                this.state = {};
+            }
+            render(){
+                return  (
+                    <div>
+                        <a onClick={this.mostrarHora} href="">Saludar</a>
+                        {/* Emplear una expresión con el operador ternario para mostrar la hora si existe
+                        y si no mostrar "Todavía no se ha mostrado la hora"*/}
+                        
+                    </div>
+                );
+            }
+            mostrarHora = (event) =>{
+                // event implementa los atributos y métodos de la W3C.
+                event.preventDefault();
+                this.setState({date:new Date()});
+            }
+        }
+        
+	    ReactDOM.render(<Principal/>,document.getElementById('root'));       
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+
+</html>

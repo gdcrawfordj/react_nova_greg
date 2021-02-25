@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <style>
+        div.ficha{background-color:yellow;padding: 1em; margin: 1em auto;
+                width: 400px;}
+        div.ficha p {padding: 1em;background-color:beige;}
+    </style>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.min.js"></script>
+    <script type="text/babel">
+        class Principal extends React.Component{
+            constructor(props){
+                super(props)
+                this.state = {dias:['lunes','miercoles']};
+            }
+            render(){
+                const {dias} = this.state;
+                return  (
+                    <div className="ficha">
+                       Dias 
+                       {/*########## asignar a "value" la matriz con los días seleccionados*/}
+                       {/*########## asignar true a la propiedad "multiple" para permitir la selección múltiple*/}
+                       <select value={dias} multiple={true}
+                              onChange={this.cambio.bind(this)}>
+                                <option value="lunes">Lunes</option>
+                                <option value="martes">Martes</option>
+                                <option value="miercoles">Miércoles</option>
+                                <option value="jueves">Jueves</option>
+                        </select> 
+                        <ul>{this.state.dias.map(dia=><li key={dia}>{dia}</li>)}</ul>
+                    </div>
+                );
+            }
+            cambio(event){
+                // La colección "options" del select retorna todos sus Options.
+                var options = event.target.options;
+                var dias = [];
+                for (let i = 0; i < options.length; i++) {
+                    // Los options seleccionados tienen la propiedad "selected" a true
+                    // en ese caso los incluimos en la matriz de días seleccionados.
+                    if(options[i].selected){
+                        dias.push(options[i].value);
+                    }
+                }
+                this.setState({dias:dias});
+                console.log(dias);
+            }
+        }
+    
+	    ReactDOM.render(<Principal/>, document.getElementById('root'));    
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+    
+</body>
+
+</html>

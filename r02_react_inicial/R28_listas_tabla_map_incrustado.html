@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <style>
+        div.ficha{background-color:yellow;padding: 1em; margin: 1em auto;
+                width: 400px;}
+        div.ficha p {padding: 1em;background-color:beige;}
+        table{border-collapse:collapse;width:60%;margin:10px auto;}
+        td, th{border:1px solid black;padding:4px 8px;}
+        tbody>tr:nth-child(2n){background-color: burlywood;}
+    </style>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.min.js"></script>
+    <script type="text/babel">
+        
+        class Principal extends React.Component{
+            constructor(props){
+                super(props)
+                var m = [{id:1,dia:"lunes"},{id:2,dia:"martes"},
+                        {id:3,dia:"miércoles"},{id:4,dia:"jueves"}];
+                this.state = {m:m};
+            }
+            render(){
+                const {m} = this.state;
+                return  (
+                    <table>
+                        <thead><tr><th>ID</th><th>DIA</th></tr></thead>
+                        <tbody>
+							{/*######### Mapear las filas de una tabla HTML con las columnas para id y dia*/}
+                            {m.map(item => <tr key={item.id}>
+                                <td>{item.id}</td>
+                                <td>{item.dia}</td>
+                            </tr>)}
+                        </tbody>
+                    </table>
+                );
+            }
+        }
+    
+	    ReactDOM.render(<Principal/>,
+				document.getElementById('root'));    
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+    
+</body>
+    
+</html>

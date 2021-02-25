@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="css/estilos.css"/>
+    <script src="js/matriz_personas.js"></script>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.min.js"></script>
+    <script type="text/babel">
+        
+        class Principal extends React.Component{
+            constructor(props){
+                super(props)
+                // ########### Agregar al state un atributo "personas"
+                //      con los datos de la matriz_personas importada.
+                this.state = {personas:matriz_personas};
+            }
+            render(){
+                console.log("render Principal");
+                return  (
+                    <div>
+                        {/* ######## Ejecutar el método "insertarUno" cuando 
+                            se produzca el evento "personaInsertada" de "InsertarForm"*/}
+                        <InsertarForm />
+                        {/* ######## Proporcionar a "TablaPersonas" en su prop "personas"
+                            la lista de personas guardada en el state de "Principal"*/}
+                        {/* ######## Elejcutar el método "borrarUno" cuando
+                        se produzca el evento "borrarPersona" del 
+                            componete "TablaPersonas"*/}
+                        <TablaPersonas />
+                    </div>
+                );
+            }
+            insertarUno(nuevo){
+                this.state.personas.push(nuevo);
+                // ####### Forzar la actualización del componente y sus hijos
+                
+            }
+            borrarUno(dni){
+                var personas = this.state.personas.filter(p=>p.dni!=dni);
+                // ###### Guardar la nueva persona en el atributo "personas"
+                // del "state"
+                
+            }
+        }
+        class InsertarForm extends React.Component{
+            constructor(props){
+                super(props);
+                this.persona={};
+            }
+            render(){
+                console.log("render InsertarForm");
+                return (<div className="panel">
+                    dni <input type="text" name="dni"
+                            onChange={this.cambio.bind(this)}/><br/>
+                    nombre <input type="text" name="nombre"
+                            onChange={this.cambio.bind(this)}/><br/>
+                    apellidos <input type="text" name="apellidos"
+                            onChange={this.cambio.bind(this)}/><br/>
+                    saldo <input type="text" name="saldo"
+                            onChange={this.cambio.bind(this)}/><br/>
+                    <p className="botones">
+                        <button onClick={this.insertar.bind(this)}>
+                            Insertar</button></p>
+                </div>);
+            }
+            cambio(event){
+                this.persona[event.target.name]=event.target.value;
+            }
+            insertar(event){
+                // ######## Lanzar el evento "personaInsertada" con la
+                //          nueva "persona" pasada como argumento 
+                
+				
+                this.persona={};//Nueva para la siguiente inserción.
+            }
+        }
+
+        class TablaPersonas extends React.Component{
+            constructor(props){
+                super(props)
+            }
+            render(){
+                console.log("render TablaPersonas");
+                return (<table>
+                    <thead>
+                        <tr><th>DNI</th><th>Nombre</th><th>Apellidos</th><th>Saldo</th><th>Acciones</th></tr>
+                    </thead>
+                    <tbody>
+                        {/* ####### generar mediante el método "map" de la prop 
+                                "personas" las filas de la tabla con los datos 
+                                de cada persona*/}
+                        {/* ###### A cada fila de la tabla agregar un botón
+                                que lance el evento "borrar" pasandole como
+                                argumento el "dni" de la persona a borrar*/}
+                        
+						
+                    </tbody>
+                </table>);
+            }
+            borrar(dni){
+                this.props.borrarPersona(dni);
+            }
+        }
+	    ReactDOM.render(<Principal/>,
+				document.getElementById('root'));    
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+    
+</body>
+
+</html>

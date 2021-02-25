@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <style>
+        div.ficha{background-color:yellow;padding: 1em; margin: 1em auto;
+                width: 400px;}
+        div.ficha p {padding: 1em;background-color:beige;}
+    </style>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.min.js"></script>
+    <script type="text/babel">
+        
+        class Principal extends React.Component{
+            constructor(props){
+                super(props)
+                var m = [{id:1,dia:"lunes"},{id:2,dia:"martes"},
+                        {id:3,dia:"miércoles"},{id:4,dia:"jueves"}];
+				// ######## Guardar en this.lista una matriz de elementos jsx de modo que cada 
+                //      contenga un parrafo con el día en su interior.        
+                const lista = m.map(item => <p>{item.dia}</p>);
+                this.state = {lista};
+            }
+            render(){
+                const {lista} = this.state;
+                return  (
+                    <div className="ficha">
+                        {lista}
+                    </div>
+                );
+            }
+        }
+    
+	    ReactDOM.render(<Principal/>,
+				document.getElementById('root'));    
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+
+</html>

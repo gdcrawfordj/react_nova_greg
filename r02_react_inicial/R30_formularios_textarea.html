@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <style>
+        div.ficha{background-color:yellow;padding: 1em; margin: 1em auto;
+                width: 400px;}
+        div.ficha p {padding: 1em;background-color:beige;}
+    </style>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.min.js"></script>
+    <script type="text/babel">
+        class Principal extends React.Component{
+            constructor(props){
+                super(props)
+                this.state = {comentario:'En un lugar de la Mancha...'};
+            }
+            render(){
+                const {comentario, comentario2} = this.state;
+                return  (
+                    <div className="ficha">
+                       Comentario 
+                       {/* ######### asignar al "value" el contenido de "state.comentario"*/}
+                       {/* ######### asignar al evento "change" el método "cambio"*/}
+                       <textarea value={comentario} onChange={this.cambio.bind(this)}/> 
+                        <p>{comentario}</p>
+                        Comentario2:{/*const {target} = event;*/}
+                       <textarea value={comentario2} onChange={({target})=>{this.setState({comentario2:target.value})}}/> 
+                        <p>{comentario2}</p>
+                        {/* ######### asignar al evento "click" el código que borre el comentario*/}
+                        <button onClick={()=> this.setState({comentario:'', comentario2:''})}>
+                            Borrar</button>
+                    </div>
+                );
+            }
+            cambio(event){
+                // ############ actualizar "comentario" en el state 
+                //      con el nuevo valor que procede de control textarea
+                this.setState({comentario:event.target.value})
+            }
+        }
+    
+	    ReactDOM.render(<Principal/>,document.getElementById('root'));     
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+
+</html>

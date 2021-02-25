@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <style>
+        div.ficha{background-color:yellow;padding: 1em; margin: 1em auto;
+                width: 400px;}
+        div.ficha p {padding: 1em;background-color:beige;}
+    </style>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.min.js"></script>
+    <script type="text/babel">
+        class Principal extends React.Component{
+            constructor(props){
+                super(props)
+                this.state = {nombre:'',apellidos:''};
+                this.cambio = this.cambio.bind(this);
+            }
+            render(){
+                const {nombre, apellidos} = this.state;
+                return  (
+                    <div className="ficha">
+                        {/*######### Asignar el atributo name a los controles con el 
+                                    nombre que queramos que aparezcan en el state*/}
+                        Nombre 
+                        <input type="text" name="nombre"
+                              value={nombre}
+                              onChange={this.cambio}/> <br/>
+                        Apellidos 
+                        <input type="text" name="apellidos"
+                              value={apellidos}
+                              onChange={this.cambio}/> <br/>
+                       
+                        <p>{nombre} - {apellidos}</p>
+                    </div>
+                );
+            }
+            cambio(event){
+                const {name, value} = event.target;
+                // name='apellidos'
+                // value='garcia'
+                console.log("name:",name);
+                // this.setState({apellidos:'garcia'})
+                // ------ VERSIÓN CLÁSICA ----------------
+                // const nuevo ={};
+                // nuevo[name] = value; //nuevo['apellidos']= 'garcia'; // nuevo.apellidos = 'garcia';
+                // this.setState(nuevo);
+                // ------ VERSÍON ES6 --------------
+                this.setState({[name]:value});
+            }
+        }
+    
+	    ReactDOM.render(<Principal/>,document.getElementById('root'));    
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+    
+</body>
+
+</html>

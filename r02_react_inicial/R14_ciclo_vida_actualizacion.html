@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <style>
+        div.ficha{background-color:yellow;padding: 1em; margin: 1em auto;
+                width: 200px;}
+    </style>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.min.js"></script>
+    <script type="text/babel">
+        class Principal extends React.Component{
+            constructor(props){
+                super(props)
+                this.state = {date:new Date()};
+            }
+            componentWillMount(){
+                console.log('componentWillMount');
+                // ######### Justo antes de la primera renderización lanzamos la temporización cada 300ms.
+                // ######### guardar el número de temporizador en el atributo "t".
+                this.t = setInterval(
+                    // Cambio de veces en el state.
+                    ()=> this.setState({date: new Date()}),
+                    300
+                );
+
+            }
+            shouldComponentUpdate(nextProps, nextState){
+                // Si los segundos son iguales, retorna false
+                // indicando que no se debe re-renderizar.
+                // ########### solamente renderiza (retorna true) si los segundos han cambiado.
+                const currentSeconds = this.state.date.getSeconds();
+                const nextSeconds = nextState.date.getSeconds();
+                return currentSeconds !== nextSeconds;
+            }
+            render(){
+                const {date} = this.state;
+                console.log(date.toLocaleTimeString());
+                return  (
+                    <div>
+                        {/* ############ Mostramos el toLocaleTimeString() del atributo "date" del "state" */}
+                        <div className="ficha">{date.toLocaleTimeString()}</div>
+                        <Interior />
+                    </div>
+                );
+            }
+            componentWillUnmount(){
+                clearInterval(this.t);
+            }
+        }
+        class Interior extends React.Component{
+            shouldComponentUpdate(nextProps, nextState){
+                return false;
+            }
+            render(){
+                console.log("Interior actualizado ctualizado");
+                return  <div>Componente interior</div>;
+            }
+        }
+	    ReactDOM.render(<Principal/>,document.getElementById('root'));     
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+
+</html>

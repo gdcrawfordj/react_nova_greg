@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.min.js"></script>
+    <script type="text/babel">
+        const apellidos = 'González';
+        const miNombre = `Alicia ${apellidos}`;
+		// ######### Reemplazar el literal "Pepe" por el contenido de la variable miNombre
+        const elemento = <h1>Ejemplo de {miNombre}</h1>;
+	    ReactDOM.render(elemento, document.getElementById('root'));    
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+
+</html>

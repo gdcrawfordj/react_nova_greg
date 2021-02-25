@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <style>
+        div.ficha{background-color:yellow;padding: 1em; margin: 1em auto;
+                width: 400px;}
+        div.ficha p {padding: 1em;background-color:beige;}
+    </style>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.min.js"></script>
+    <script type="text/babel">
+        class Principal extends React.Component{
+            constructor(props){
+                super(props)
+                this.state = {dia:'miercoles'};
+                this.dias = {
+                    lunes: 'Lunes',
+                    martes: 'Martes',
+                    miercoles:'Miércoles',
+                    jueves: 'Jueves',
+                }
+            }
+            render(){
+                const {dia} = this.state;
+                const {dias} = this;
+                return  (
+                    <div className="ficha">
+                       Apellidos 
+                       {/* ######### asignar al "value" el contenido de "state.dia"*/}
+                       {/* ######### asignar al evento "change" el método "cambio"*/}
+                       <select value={dia} onChange={this.cambio.bind(this)}>
+                            {Object.keys(dias).map(key=><option key={key} value={key}>{dias[key]}</option>)}
+                        </select> 
+                        <p>{dias[dia]}</p>
+                    </div>
+                );
+            }
+            cambio(event){
+                const {value} = event.target;
+                console.log("Dia:",value);
+                // ############ actualizar "dia" en el state 
+                //      con el nuevo valor que procede de control select
+                this.setState({dia:value})
+                
+            }
+        }
+    
+	    ReactDOM.render(<Principal/>,document.getElementById('root'));     
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+    
+</body>
+
+</html>

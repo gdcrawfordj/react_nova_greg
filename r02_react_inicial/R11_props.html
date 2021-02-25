@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <style>
+        div.ficha img{height:100px;}
+        div.ficha{background-color:yellow;padding: 1em; margin: 1em auto;
+                width: 200px;}
+        div.lista{padding: 1em; margin: 1em auto;
+                width: 400px;border:1px solid black;}
+    </style>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.min.js"></script>
+    <script type="text/babel">
+        class Ficha extends React.Component{
+            // ############ Pasar al constructor el objeto "props" como argumento
+            constructor(props){
+                // ######### Pasar al constructor de la superclase el objeto "props"
+                super(props);
+            }
+            render(){
+                const {nombre, foto} = this.props;
+                return  (
+                    <div className="ficha">
+                        {/* ######## reemplazar el literal "Pepe" el atributo "nombre" del objeto "props"  */}
+                        <h1>Casa de {this.props.nombre}</h1>
+                        {/* ######## asignar a "src" el valor del atributo "foto" del objeto "props" (y a "alt" asignarle el "nombre") */}
+                        <img src={foto} alt={nombre} />
+                    </div>
+                );
+            }
+           
+        }
+        class ListadoFichas extends React.Component{
+            render(){
+                let foto2 = "img/gato.png";
+                return  (
+                    <div className="lista">
+                        {/* ######## insertar el componente "Ficha" con literales "img/casa.gif" y "Pepe" en los atributos "foto" y "nombre" respectivamente*/}
+                        <Ficha foto="img/casa.gif" nombre="Pepe" />
+                        {/* ######## insertar el componente "Ficha" con el valor de la variable "foto2" en el atributo "foto" y el literal "Marta" en "nombre" */}
+                        <Ficha foto={foto2} nombre="Marta" />
+                        
+                    </div>
+                );
+            }
+        }
+	    ReactDOM.render(<ListadoFichas />, document.getElementById('root'));      
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+
+</html>

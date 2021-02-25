@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <style>
+        div.ficha{background-color:yellow;padding: 1em; margin: 1em auto;
+                width: 400px;}
+        div.ficha p {padding: 1em;background-color:beige;}
+    </style>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.min.js"></script>
+    <script type="text/babel">
+        class Principal extends React.Component{
+            constructor(props){
+                super(props)
+                this.state = {nombre:'',apellidos:''};
+            }
+            render(){
+                const {nombre, apellidos} = this.state;
+                return  (
+                    <div className="ficha">
+                        Nombre 
+                        {/*########### Asignar mediante una expresión lamba en la propiedad
+                                "ref" la referencia al control a un atributo del 
+                                objeto llamado txtNombre */}
+                        <input type="text" ref={control => this.txtNombre = control}
+                              defaultValue="anonimo"
+                              /> <br/>
+                        Apellidos 
+                         {/*########### Asignar mediante una expresión lamba en la propiedad
+                                "ref" la referencia al control a un atributo del 
+                                objeto llamado txtApellidos */}
+                        <input type="text" ref={control => this.txtApellidos = control}
+                              /><br/>
+                        <button onClick={this.leerControles.bind(this)}>
+                            Leer controles</button>
+                        <p>{nombre} - {apellidos}</p>
+                    </div>
+                );
+            }
+            leerControles(event){
+			    // Lectura de los value de los controles cuyas referencias tenemos guardadas.
+                this.setState({
+                    nombre: this.txtNombre.value,
+                    apellidos: this.txtApellidos.value
+                });
+            }
+        }
+    
+	    ReactDOM.render(<Principal/>,document.getElementById('root'));   
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+    
+</body>
+
+</html>

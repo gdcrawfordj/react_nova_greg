@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <style>
+        div.ficha img{height:100px;}
+        div.ficha{background-color:yellow;padding: 1em; margin: 1em auto;
+                width: 200px;}
+        div.lista{padding: 1em; margin: 1em auto;
+                width: 400px;border:1px solid black;}
+    </style>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.min.js"></script>
+    <script type="text/babel">
+        class Cuadro extends React.Component{
+            // props se cambia fuera del componente (internamente es de sólo lectura)
+            // state se cambia dentro del componente (con el método setState).
+            constructor(props){
+                super(props);
+            }
+            render(){//Render se ejecutará si cambia "props" o si cambia "state"
+                const {texto} = this.props;
+                return  (
+                    <div className="ficha">
+                        {/* ############ mostrar dentro del h1 el valor de la propiedad texto del componente*/}
+                        <h1>Valor actual {texto}</h1>
+                    </div>
+                );
+            }
+        }
+        class Principal extends React.Component{
+            constructor(){
+                super()
+                this.state = {veces:5};
+                this.t = setInterval(()=> this.setState({veces:this.state.veces-1}),1000);
+            }
+            render(){
+                const {veces} = this.state;
+                if(veces<=0){
+                    clearInterval(this.t);
+                }
+                const contenido = veces ? <Cuadro texto={veces}/> : <img src="img/casa.gif" />;
+                return  (
+                    <div className="lista">
+                        {contenido}
+                    </div>
+                );
+            }
+        }
+	    ReactDOM.render(<Principal />, document.getElementById('root'));       
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+
+</html>

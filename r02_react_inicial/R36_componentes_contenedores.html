@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <style>
+        div.ficha{background-color:yellow;padding: 1em; margin: 1em auto;
+                width: 400px;}
+        div.ficha p {padding: 1em;background-color:beige;}
+    </style>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.min.js"></script>
+    <script type="text/babel">
+        
+        class Formulario extends React.Component{
+            constructor(props){
+                super(props)
+                this.state = {apellidos:''};
+            }
+            render(){
+                console.log("--- render ----");
+                return  (
+                    <p className="ficha">
+                       Apellidos 
+                       <input type="text" 
+                              value={this.state.apellidos}
+                              onChange={this.cambio.bind(this)}/> 
+                    </p>
+                );
+            }
+            cambio(event){
+                console.log("Apellidos:",event.target.value);
+                this.setState({apellidos:event.target.value})
+            }
+        }
+        class Marco extends React.Component{
+            constructor(props){
+                super(props);
+                console.log(
+                    'Marco con ',
+                    React.Children.count(props.children),
+                    'hijos'
+                );
+            }
+            render(){
+                const {children} = this.props;
+                const hijos = [];
+                React.Children.forEach(children, (hijo,i)=> hijos.unshift(<li key={i}>{hijo}</li>));
+                return (<div style={{borderWidth:this.props.borde,
+                        borderStyle:'dashed',borderColor:'green'}}>
+                        {/*########## Incluir lo necesario para que se vean
+                            aquí los elementos anidados en el uso
+                            de la etiqueta "Marco"*/}
+                        {/*this.props.children*/}
+                        <ul>
+                            {hijos}
+                        </ul>
+                </div>);
+            }
+        }
+        class Principal extends React.Component{
+            constructor(props){
+                super(props);
+            }
+            render(){
+                return(<div>
+                        <Marco borde={5}>
+                            <Formulario/>
+                            <span>{new Date().toLocaleTimeString()}</span>
+                        </Marco>
+                </div>);
+            }
+        }
+	    ReactDOM.render(<Principal/>,
+				document.getElementById('root'));   
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+    
+</body>
+
+</html>

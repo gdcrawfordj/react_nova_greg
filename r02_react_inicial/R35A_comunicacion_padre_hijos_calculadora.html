@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="css/estilos.css"/>
+    <script src="js/matriz_personas.js"></script>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.min.js"></script>
+    <script type="text/babel">
+        
+        class Principal extends React.Component{
+            constructor(props){
+                super(props);
+                this.state = {nombre1: 'valor 0'};
+            }
+            render(){
+                const {c1, c2, nombre1} = this.state;
+                const total = isNaN(c1 + c2) ? '': c1 + c2;
+                return (<div>
+                    <div>
+                        <Calculadora nombreA={nombre1} nombreB="valor 2" 
+                            onResultado={(resultado)=> this.setState({c1:resultado})}/>
+                    </div>
+                    <div>
+                        <Calculadora nombreA="a" nombreB="b"
+                        onResultado={(resultado)=> this.setState({c2:resultado})}/>
+                    </div>
+                    <p>Total: {total}</p>
+                </div>);
+            }
+            componentDidMount(){
+                setTimeout(()=>this.setState({nombre1:'valor 1'}),2000);
+            }
+            
+        }
+        class Calculadora extends React.Component{
+            constructor(props){
+                super(props);
+                this.state = {};
+            }
+
+            componentDidUpdate(prevProps) {
+                // Comprobamos si nombreA ha cambiado
+                if (this.props.nombreA !== prevProps.nombreA) {
+                    console.log('Next Props ->',  prevProps.nombreA, this.props.nombreA);
+                }
+            }
+
+            render(){
+                const {resultado} = this.state;
+                const {nombreA, nombreB} = this.props;
+                return <div className="calculadora">
+                    {nombreA}:<input type="number"  ref={control => this.txtA = control}/><br/>
+                    {nombreB}:<input type="number"  ref={control => this.txtB = control}/><br/>
+                    <button onClick={this.sumar.bind(this)}>Sumar</button>
+                    <p>{resultado}</p>
+                </div>
+            }
+            sumar(event){
+                const {txtA, txtB} = this;
+                if(txtA.checkValidity() && txtB.checkValidity()) {
+                    const a = parseFloat(txtA.value);
+                    const b = parseFloat(txtB.value);
+                    if(!isNaN(a) && !isNaN(b)){
+                        const resultado = a + b;
+                        this.setState({resultado});
+                        this.props.onResultado(resultado);
+                    }
+                }
+            }
+            
+        }
+
+	    ReactDOM.render(<Principal/>,
+				document.getElementById('root'));    
+    </script>
+    <style>
+        .calculadora {
+            border: 1px solid black;
+            padding: 2rem;
+            margin: 2rem;
+            background-color: darkkhaki;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    
+</body>
+
+</html>

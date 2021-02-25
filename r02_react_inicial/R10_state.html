@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <style>
+        div.ficha img{height:100px;}
+    </style>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.min.js"></script>
+    <script type="text/babel">
+        class Ficha extends React.Component{
+            constructor(){
+                super();
+                // ########## incluir en el state un atributo "foto" que tome el valor "img/casa.gif"
+                this.state= {foto:'img/casa.gif'};
+                setTimeout(()=>{this.cambiarFoto()},2000);
+            }
+            render(){
+				console.log("----------- RENDER ------------"+ this.state.foto);
+                return  (
+                    <div className="ficha">
+                        <h1>Casa en el campo</h1>
+                        <img  src={this.state.foto} alt="Mi casa" />
+                    </div>
+                );
+            }
+            cambiarFoto(){
+                // ############## Cambiar el valor del atributo "foto" del state a "img/gato.png"
+                this.setState({foto:'img/gato.png'});
+            }
+
+        }
+	    ReactDOM.render(<Ficha />,document.getElementById('root'));    
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+
+</html>

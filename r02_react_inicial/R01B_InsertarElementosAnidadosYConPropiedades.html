@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <style>
+        img{height:100px;}
+    </style>
+    <script crossorigin src="https://unpkg.com/react@17.0.1/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17.0.1/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+    <script type="text/babel">
+        // ########## Crear un elemento img con react que en su atributo src apunte a "img/gato.png"
+        let elementoImg = React.createElement("img",    {src:"img/gato.png"}     );
+        // ########## Crear un elemento h2 con react que contenga un texto y la imagen anterior"
+        let elementoH2 = React.createElement(   "h2",    {},   "Gato:" , elementoImg  );
+	    // ------ Inyección del h2 en el elmento con id="root"     
+        ReactDOM.render(elementoH2,document.getElementById('root'));    
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+
+</html>

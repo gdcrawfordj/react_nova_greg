@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.min.js"></script>
+    <script type="text/babel">
+        // Ejemplo de eventos del ciclo de vida creación, renderizado y desmontaje.
+        class Ficha extends React.Component{
+            constructor(){
+                super();
+                this.foto = "img/casa.gif";
+                console.log("----------- CONSTRUCTOR ------------" + this.getTime());
+            }
+            componentWillMount(){
+                console.log("----------- componentWillMount ------------"+ this.getTime());
+            }
+            componentDidMount(){
+                console.log("----------- componentDidMount ------------"+ this.getTime());
+            }
+            componentWillUnmount(){
+                console.log("----------- componentWillUnmount ------------"+ this.getTime());
+            }
+            render(){
+                console.log("----------- RENDER ------------"+ this.getTime());
+                return  (
+                    <div>
+                        <h1>Casa en el campo</h1>
+                        <img  src={this.foto} alt="Mi casa" />
+                    </div>
+                );
+            }
+            getTime(){
+                let d = new Date();
+                return d.toLocaleTimeString() + "." + d.getMilliseconds();
+            }
+        }
+	    ReactDOM.render(<Ficha />,document.getElementById('root'));    
+    </script>
+</head>
+<body>
+    <div id="root" onclick="ReactDOM.unmountComponentAtNode(document.getElementById('root'))"></div>
+</body>
+
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <script crossorigin src="https://unpkg.com/react@17.0.1/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17.0.1/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+    <script type="text/babel">
+		// ########## Crear un elemento h2 con react que contenga el texto "Elemento creado con React"
+        const h2 = React.createElement('h2',{},'Elemento creado con React');
+	    // ############ Injectar el elmento h2 en el elemento con id="root"
+        ReactDOM.render(h2, document.querySelector('#root') );
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+
+</html>

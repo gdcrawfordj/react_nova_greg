@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <style>
+        div.ficha{background-color:yellow;padding: 1em; margin: 1em auto;
+                width: 200px;}
+        p{padding: 1em;}
+    </style>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.min.js"></script>
+    <script type="text/babel">
+        class Principal extends React.Component{
+            constructor(props){
+                super(props)
+                this.state = {estilo:{width:200,backgroundColor:'gold'},temperatura:20};
+            }
+            render(){
+                const {estilo} = this.state; 
+                return  (
+                    <div>
+                        <button onClick={this.cambiarAncho}>Ensanchar</button>
+                        {/*########## Asignar a la propiedad "style" de la etiqueta "p" el objeto JSON "estilo" del "state" */}
+                        <p style={estilo}>En un lugar de la Mancha...</p>
+                    </div>
+                );
+            }
+            cambiarAncho = (event) =>{
+                // Copiamos this.estilo a un objeto nuevo
+                // para que no esté vigilado por this.state
+                // y así poder realizar cambios sobre él.
+                const estilo = {...this.state.estilo};
+                // Hacemos los cambios
+                estilo.width += 10;
+
+                // ######## Actualizar el objeto "stilo" del "state".
+                this.setState({estilo})
+            }
+        }
+	    ReactDOM.render(<Principal/>,document.getElementById('root'));   
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <style>
+        div.ficha{background-color:yellow;padding: 1em; margin: 1em auto;
+                width: 200px;}
+    </style>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.min.js"></script>
+    <script type="text/babel">
+        
+        class Principal extends React.Component{
+            constructor(props){
+                super(props)
+                this.state = {date:new Date(), veces: 0};
+                this.nombre = "Mi componente";
+                // Los métodos que se llaman desde eventos tienen que estar "bindeados" con el this componente.
+                this.saludar = this.saludar.bind(this);
+                this.incrementar = this.incrementar.bind(this);
+            }
+            render(){
+                const {veces} = this.state;
+                return  (
+                    <div>
+                        {/*########## Enlazar el evento click con el método saludar y que reciba el this del objeto (empleando bind)*/}
+                        <button onClick={this.saludar}>Saludar</button>
+                        <button onClick={this.incrementar}>Incrementar</button>
+                        <div>{veces}</div>
+                        <Interior />
+                    </div>
+                );
+            }
+            saludar(event){
+                // Si no ponemos bind, this sería undefined.
+                console.log(this);
+                alert(this.nombre);
+            }
+            incrementar(event){
+               this.setState({veces: this.state.veces + 1});
+            }
+        }
+        
+        class Interior extends React.Component{
+            render(){
+                console.log("Actualizado el interior");
+                return  (
+                    <div>Componente interior</div>
+                );
+            }
+        }
+	    ReactDOM.render(<Principal/>,document.getElementById('root'));    
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+
+</html>

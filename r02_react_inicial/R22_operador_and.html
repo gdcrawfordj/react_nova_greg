@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <style>
+        div.ficha{background-color:yellow;padding: 1em; margin: 1em auto;
+                width: 200px;}
+    </style>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.min.js"></script>
+    <script type="text/babel">
+        class Principal extends React.Component{
+            constructor(props){
+                super(props)
+                this.state = {};
+            }
+            render(){
+                return  (
+                    <div>
+                        <a onClick={this.mostrarHora} href="">Saludar</a>
+                        {/*######### Incluir una expresión que si this.state.date existe, 
+                        renderice en un parrafo el toLocaleTimeString() de ese objeto*/}
+                        
+                        
+                    </div>
+                );
+            }
+            mostrarHora = (event) =>{
+                // event implementa los atributos y métodos de la W3C.
+                event.preventDefault();
+                this.setState({date:new Date()});
+            }
+        }
+        
+       
+	    ReactDOM.render(<Principal/>,document.getElementById('root'));     
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+
+</html>

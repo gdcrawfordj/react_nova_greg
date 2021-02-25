@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <style>
+        div.ficha{background-color:yellow;padding: 1em; margin: 1em auto;
+                width: 200px;}
+    </style>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.min.js"></script>
+    <script type="text/babel">
+       class CuentaAtras extends React.Component{
+            constructor(props){
+                super(props)
+                // En este caso props.valorInicia es solamente
+                // la semilla del atributo del state llamada
+                // veces (pero este luego cambiará)
+                // ######## Guardar en el state un atributo llamado "veces" con el valor recibido en el atributo "valorInicial" del objeto "props".
+                this.state = {veces: this.props.valorInicial};
+                console.log(typeof this.props.valorInicial);
+                const a = this.props.valorInicial - 1;
+                console.log(typeof a);
+                
+                this.t = setInterval(
+                    // Cambio de veces en el state.
+                    ()=> this.setState({veces:this.state.veces-1}),
+                    1000
+                );
+            }
+            render(){
+                const {veces} = this.state;
+                const {valorInicial} = this.props;
+                if(veces<=0){
+                    clearInterval(this.t);
+                }
+                return  (
+                    <div>
+                        {/* ########### Mostrar dentro del div el valor de la variable "valorInicial" en lugar del literal*/}
+                        <div className="ficha">
+                            Valor inicial: {valorInicial}</div>
+                        {/* ########## Mostrar dentro del div el valor de la variable "veces" en lugar del literal*/}
+                        <div className="ficha">
+                            Valor actual: {veces}</div>
+                    </div>
+                );
+            }
+        }
+		// ############### Asignar el valor 10 a la propiedad "valorInicial" de la etiqueta "CuentaAtras"
+	    ReactDOM.render(<CuentaAtras valorInicial={10}/>,document.getElementById('root'));     
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+
+</html>

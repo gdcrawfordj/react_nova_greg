@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="css/estilos.css"/>
+    <script src="js/matriz_personas.js"></script>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/redux.js"></script>
+    <script src="js/babel.min.js"></script>
+    <script type="text/babel">
+        // -------------- CONTENEDOR ------------------
+        class Principal extends React.Component{
+            constructor(props){
+                super(props);
+                store.subscribe(this.actualizar.bind(this));
+                this.state = {personas:store.getState().personasMostradas};
+            }
+            render(){
+                console.log("render Principal");
+                return  (
+                    <div>
+                        <InsertarForm pesonaInsertada=
+                                    {this.insertarUno.bind(this)}/>
+                        <TablaPersonas personas={this.state.personas} 
+                            borrarPersona={this.borrarUno.bind(this)}/>
+                    </div>
+                );
+            }
+            insertarUno(nuevo){
+                store.dispatch({type:"INSERTAR",nuevo:nuevo});
+            }
+            borrarUno(dni){
+                store.dispatch({type:"BORRAR",dni:dni});
+            }
+            actualizar(){
+                this.setState({personas:store.getState().personasMostradas});
+            }
+        }
+        // --------------- PRESENTACIÓN --------------
+        class InsertarForm extends React.Component{
+            constructor(props){
+                super(props);
+                this.state = {
+                    persona:{dni:'',nombre:'',apellidos:'',saldo:''}
+                };
+            }
+            render(){
+                console.log("render InsertarForm");
+                return (<div className="panel">
+                    dni <input type="text" name="dni" value={this.state.persona.dni}
+                            onChange={this.cambio.bind(this)}/><br/>
+                    nombre <input type="text" name="nombre" value={this.state.persona.nombre}
+                            onChange={this.cambio.bind(this)}/><br/>
+                    apellidos <input type="text" name="apellidos" value={this.state.persona.apellidos}
+                            onChange={this.cambio.bind(this)}/><br/>
+                    saldo <input type="text" name="saldo" value={this.state.persona.saldo}
+                            onChange={this.cambio.bind(this)}/><br/>
+                    <p className="botones">
+                        <button onClick={this.insertar.bind(this)}>
+                            Insertar</button></p>
+                </div>);
+            }
+            cambio(event){
+                let persona = Object.assign({},this.state.persona);
+                persona[event.target.name]=event.target.value;
+                this.setState({persona:persona});
+            }
+            insertar(event){
+                this.props.pesonaInsertada(this.state.persona);
+                this.setState({
+                    persona:{dni:'',nombre:'',apellidos:'',saldo:''}
+                });//Nueva para la siguiente inserción.
+            }
+        }
+
+        class TablaPersonas extends React.Component{
+            constructor(props){
+                super(props)
+            }
+            render(){
+                console.log("render TablaPersonas");
+                return (<table>
+                    <thead>
+                        <tr><th>DNI</th><th>Nombre</th><th>Apellidos</th><th>Saldo</th><th>Acciones</th></tr>
+                    </thead>
+                    <tbody>
+                        {this.props.personas.map(p=>
+                                (<tr key={p.dni}>
+                                    <td>{p.dni}</td><td>{p.nombre}</td><td>{p.apellidos}</td>
+                                    <td>{p.saldo}</td><td>
+                                        <button onClick={(event)=>this.borrar(p.dni)}>&times;</button></td>
+                                </tr>)
+                        )}
+                    </tbody>
+                </table>);
+            }
+            borrar(dni){
+                this.props.borrarPersona(dni);
+            }
+        }
+        // ---------- INICO DE REDUX (Toda la lógica de negocio)---------------
+        let estadoInicial ={
+            personasMostradas:matriz_personas
+        };
+        function reductorPrincipal(estado=estadoInicial,accion){
+            console.log("reducer","estado",estado,"accion",accion);
+            if(accion.type=="INSERTAR"){
+                let estadoSiguiente = {
+                    personasMostradas: 
+                        Object.assign([],estado.personasMostradas)
+                };
+                estadoSiguiente.personasMostradas.push(accion.nuevo);
+                return estadoSiguiente;
+            } else if(accion.type=="BORRAR"){
+                let estadoSiguiente = {};
+                estadoSiguiente.personasMostradas = 
+                    estado.personasMostradas.filter(
+                        p => p.dni!=accion.dni
+                    );
+                return estadoSiguiente;
+            } else {
+                return Object.assign({},estado);
+            }
+        }
+        const store = Redux.createStore(reductorPrincipal);
+        // ----------- INICIO DE REACT -----------
+	    ReactDOM.render(<Principal/>,
+				document.getElementById('root'));    
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+    
+</body>
+
+</html>
